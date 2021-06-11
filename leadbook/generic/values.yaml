@@ -185,7 +185,7 @@ service:
   containerSecurityContext:
     enabled: true
     runAsUser: 1001
-  
+
   %%OTHER_PARAMETERS_RELATED_TO_THIS_CONTAINER/POD%%
 
   ## @param %%MAIN_OBJECT_BLOCK%%.existingConfigmap The name of an existing ConfigMap with your custom configuration for %%MAIN_CONTAINER_NAME%%
@@ -199,10 +199,6 @@ service:
   args: []
   ## @param %%MAIN_OBJECT_BLOCK%%.hostAliases %%MAIN_CONTAINER_NAME%% pods host aliases
   ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
-  ##
-  hostAliases: []
-  ## @param %%MAIN_OBJECT_BLOCK%%.podLabels Extra labels for %%MAIN_CONTAINER_NAME%% pods
-  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   ##
   podLabels: {}
   ## @param %%MAIN_OBJECT_BLOCK%%.podAnnotations Annotations for %%MAIN_CONTAINER_NAME%% pods
@@ -276,31 +272,6 @@ service:
   extraEnvVarsSecret:
   ## @param %%MAIN_OBJECT_BLOCK%%.extraVolumes Optionally specify extra list of additional volumes for the %%MAIN_CONTAINER_NAME%% pod(s)
   ##
-  extraVolumes: []
-  ## @param %%MAIN_OBJECT_BLOCK%%.extraVolumeMounts Optionally specify extra list of additional volumeMounts for the %%MAIN_CONTAINER_NAME%% container(s)
-  ##
-  extraVolumeMounts: []
-  ## @param %%MAIN_OBJECT_BLOCK%%.sidecars Add additional sidecar containers to the %%MAIN_CONTAINER_NAME%% pod(s)
-  ## e.g:
-  ## sidecars:
-  ##   - name: your-image-name
-  ##     image: your-image
-  ##     imagePullPolicy: Always
-  ##     ports:
-  ##       - name: portname
-  ##         containerPort: 1234
-  ##
-  sidecars: {}
-  ## @param %%MAIN_OBJECT_BLOCK%%.initContainers Add additional init containers to the %%MAIN_CONTAINER_NAME%% pod(s)
-  ## ref: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
-  ## e.g:
-  ## initContainers:
-  ##  - name: your-image-name
-  ##    image: your-image
-  ##    imagePullPolicy: Always
-  ##    command: ['sh', '-c', 'echo "hello world"']
-  ##
-  initContainers: {}
 
 ## %%SECONDARY_CONTAINER/POD_DESCRIPTION%%
 ##
@@ -311,78 +282,3 @@ service:
 ##
 %%OTHER_OBJECT_BLOCK%%:
   %%SAME_STRUCTURE_AS_THE_MAIN_CONTAINER/POD%%
-
-## @section Init Container Parameters
-
-## 'volumePermissions' init container parameters
-## Changes the owner and group of the persistent volume mount point to runAsUser:fsGroup values
-##   based on the *podSecurityContext/*containerSecurityContext parameters
-##
-volumePermissions:
-  ## @param volumePermissions.enabled Enable init container that changes the owner/group of the PV mount point to `runAsUser:fsGroup`
-  ##
-  enabled: false
-  ## Bitnami Shell image
-  ## ref: https://hub.docker.com/r/bitnami/bitnami-shell/tags/
-  ## @param volumePermissions.image.registry Bitnami Shell image registry
-  ## @param volumePermissions.image.repository Bitnami Shell image repository
-  ## @param volumePermissions.image.tag Bitnami Shell image tag (immutable tags are recommended)
-  ## @param volumePermissions.image.pullPolicy Bitnami Shell image pull policy
-  ## @param volumePermissions.image.pullSecrets Bitnami Shell image pull secrets
-  ##
-  image:
-    registry: docker.io
-    repository: bitnami/bitnami-shell
-    tag: "10"
-    pullPolicy: Always
-    ## Optionally specify an array of imagePullSecrets.
-    ## Secrets must be manually created in the namespace.
-    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-    ## e.g:
-    ## pullSecrets:
-    ##   - myRegistryKeySecretName
-    ##
-    pullSecrets: []
-  ## Init container's resource requests and limits
-  ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
-  ## @param volumePermissions.resources.limits The resources limits for the init container
-  ## @param volumePermissions.resources.requests The requested resources for the init container
-  ##
-  resources:
-    limits: {}
-    requests: {}
-  ## Init container Container Security Context
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-  ## @param volumePermissions.containerSecurityContext.runAsUser Set init container's Security Context runAsUser
-  ## NOTE: when runAsUser is set to special value "auto", init container will try to chown the
-  ##   data folder to auto-determined user&group, using commands: `id -u`:`id -G | cut -d" " -f2`
-  ##   "auto" is especially useful for OpenShift which has scc with dynamic user ids (and 0 is not allowed)
-  ##
-  containerSecurityContext:
-    runAsUser: 0
-
-## @section Other Parameters
-
-## RBAC configuration
-##
-rbac:
-  ## @param rbac.create Specifies whether RBAC resources should be created
-  ##
-  create: false
-
-## ServiceAccount configuration
-##
-serviceAccount:
-  ## @param serviceAccount.create Specifies whether a ServiceAccount should be created
-  ##
-  create: true
-  ## @param serviceAccount.name The name of the ServiceAccount to use.
-  ## If not set and create is true, a name is generated using the common.names.fullname template
-  ##
-  name: ""
-
-## %%SUBCHART_CONTAINER/POD_DESCRIPTION%%
-##
-%%SUBCHART_NAME%%:
-  enabled: false
-  %%OTHER_PARAMETERS_RELATED_TO_THIS_SUBCHART%%
