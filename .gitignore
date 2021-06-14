@@ -10,3 +10,6 @@
 *.un~
 Session.vim
 .netrwhist
+
+# chart dependencies
+*.tgz

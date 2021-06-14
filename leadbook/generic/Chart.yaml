@@ -1,27 +1,19 @@
 annotations:
-  category: %%CHOOSE_ONE_FROM_CHART_CATEGORIES_FILE%%
+  category: ApplicationServer
 apiVersion: v2
-appVersion: %%UPSTREAM_PROJECT_VERSION%%
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
     version: 1.x.x
-description: %%DESCRIPTION%%
+description: A helm chart for deploying Python web and backend applications
 engine: gotpl
-home: %%UPSTREAM_PROJECT_URL%%
-icon: https://bitnami.com/assets/stacks/%%IMAGE_NAME%%/img/%%IMAGE_NAME%%-stack-220x234.png
-keywords:
-  - %%UPSTREAM_PROJECT_KEYWORD%%
-  - %%UPSTREAM_PROJECT_KEYWORD%%
-  - ...
+home: https://www.leadbook.com
 maintainers:
-  - email: containers@bitnami.com
-    name: Bitnami
-name: %%CHART_NAME%%
+  - email: cto@leadbook.com
+    name: Leadbook
+name: generic
 sources:
-  - https://github.com/bitnami/bitnami-docker-%%IMAGE_NAME%%
-  - %%UPSTREAM_PROJECT_SOURCE_CODE_URL%%
-  - ...
+  - https://github.com/VentesWorks/
 version: 0.1.0
