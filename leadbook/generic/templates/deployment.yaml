@@ -70,6 +70,9 @@ spec:
           {{- if .args }}
           args: {{- include "common.tplvalues.render" (dict "value" .args "context" $) | nindent 12 }}
           {{- end }}
+          {{- if .ports }}
+          ports: {{- toYaml .ports | nindent 12 }}
+          {{- end}}
           env:
             - name: foo
               value: bar

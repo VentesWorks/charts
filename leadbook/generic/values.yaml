@@ -11,22 +11,15 @@ commonAnnotations: {}
 extraDeploy: []
 
 service:
+  enabled: true
+
   type: NodePort
+  port: 80
+  nodePort: 30000
 
-  # port: 80
-  # httpsPort: 443
-
-  # nodePorts:
-  #   http:
-  #   https:
-
-  # clusterIP:
-
-  # loadBalancerIP:
-  # loadBalancerSourceRanges: []
-  # externalTrafficPolicy: Cluster
-
-  annotations: {}
+  loadBalancerIP: []
+  loadBalancerSourceRanges: "0.0.0.0/0"
+  externalTrafficPolicy: Cluster
 
 components:
   - name: genericapp
@@ -83,6 +76,10 @@ components:
 
     command: []
     args: []
+
+    ports:
+      - name: http
+        containerPort: 80
 
     podLabels: {}
     podAnnotations: {}
@@ -163,6 +160,10 @@ components:
 
     command: []
     args: []
+
+    ports:
+      - name: http
+        containerPort: 80
 
     podLabels: {}
     podAnnotations: {}
