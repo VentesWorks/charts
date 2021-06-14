@@ -2,7 +2,7 @@
 {{- range .Values.components }}
   {{- include "common.warnings.rollingTag" .image }}
 {{- end }}
-{{- include "generic.validateValues" . }}
+{{- include "app.validateValues" . }}
 
 {{- if .Values.ingress.enabled }}
 

@@ -13,7 +13,7 @@ home: https://www.leadbook.com
 maintainers:
   - email: cto@leadbook.com
     name: Leadbook
-name: generic
+name: app
 sources:
   - https://github.com/VentesWorks/
 version: 0.1.0

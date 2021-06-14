@@ -1,7 +1,7 @@
 {{/*
 Compile all warnings into a single message.
 */}}
-{{- define "generic.validateValues" -}}
+{{- define "app.validateValues" -}}
 {{- $messages := list -}}
 {{- $messages := without $messages "" -}}
 {{- $message := join "\n" $messages -}}
