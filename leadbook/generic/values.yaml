@@ -13,13 +13,19 @@ extraDeploy: []
 service:
   enabled: true
 
-  type: NodePort
+  type: LoadBalancer
   port: 80
-  nodePort: 30000
+  # nodePort: 30000
 
   loadBalancerIP: []
-  loadBalancerSourceRanges: "0.0.0.0/0"
+  loadBalancerSourceRanges: []
   externalTrafficPolicy: Cluster
+
+ingress:
+  enabled: true
+  hosts:
+    - name: localhost
+      path: /
 
 components:
   - name: genericapp
