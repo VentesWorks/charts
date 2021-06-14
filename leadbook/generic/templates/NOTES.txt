@@ -1,2 +1,4 @@
-{{- include "common.warnings.rollingTag" .Values.generic_app.image }}
+{{ range .Values.components -}}
+  {{- include "common.warnings.rollingTag" .image }}
+{{ end -}}
 {{- include "generic.validateValues" . }}

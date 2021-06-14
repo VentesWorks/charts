@@ -28,82 +28,163 @@ service:
 
   annotations: {}
 
-generic_app:
-  image:
-    registry: docker.io
-    repository: jabzta84/flaskapp
-    tag: latestv4
+components:
+  - name: genericapp
+    image:
+      registry: docker.io
+      repository: jabzta84/flaskapp
+      tag: latestv4
 
-    pullPolicy: IfNotPresent
-    pullSecrets: []
+      pullPolicy: IfNotPresent
+      pullSecrets: []
 
-    debug: false
+      debug: false
 
-  replicaCount: 1
+    replicaCount: 1
 
-  livenessProbe:
-    enabled: false
-    httpGet:
-      path: /
-      port: 80
-    initialDelaySeconds: 5
-    periodSeconds: 5
-    timeoutSeconds: 5
-    failureThreshold: 5
-    successThreshold: 5
+    livenessProbe:
+      enabled: false
+      httpGet:
+        path: /
+        port: 80
+      initialDelaySeconds: 5
+      periodSeconds: 5
+      timeoutSeconds: 5
+      failureThreshold: 5
+      successThreshold: 5
 
-  readinessProbe:
-    enabled: false
-    httpGet:
-      path: /
-      port: 80
-    initialDelaySeconds: 5
-    periodSeconds: 5
-    timeoutSeconds: 5
-    failureThreshold: 5
-    successThreshold: 5
+    readinessProbe:
+      enabled: false
+      httpGet:
+        path: /
+        port: 80
+      initialDelaySeconds: 5
+      periodSeconds: 5
+      timeoutSeconds: 5
+      failureThreshold: 5
+      successThreshold: 5
 
-  customLivenessProbe: {}
-  customReadinessProbe: {}
+    customLivenessProbe: {}
+    customReadinessProbe: {}
 
-  resources:
-    limits: {}
-    requests: {}
+    resources:
+      limits: {}
+      requests: {}
 
-  podSecurityContext:
-    enabled: false
-    fsGroup: 1001
+    podSecurityContext:
+      enabled: false
+      fsGroup: 1001
 
-  containerSecurityContext:
-    enabled: false
-    runAsUser: 1001
+    containerSecurityContext:
+      enabled: false
+      runAsUser: 1001
 
-  existingConfigmap:
+    existingConfigmap:
 
-  command: []
-  args: []
+    command: []
+    args: []
 
-  podLabels: {}
-  podAnnotations: {}
+    podLabels: {}
+    podAnnotations: {}
 
-  podAffinityPreset: ""
-  podAntiAffinityPreset: soft
-  nodeAffinityPreset:
-    type: ""
-    key: ""
-    values: []
+    podAffinityPreset: ""
+    podAntiAffinityPreset: soft
+    nodeAffinityPreset:
+      type: ""
+      key: ""
+      values: []
 
-  affinity: {}
-  nodeSelector: {}
-  tolerations: []
+    affinity: {}
+    nodeSelector: {}
+    tolerations: []
 
-  updateStrategy:
-    type: RollingUpdate
+    updateStrategy:
+      type: RollingUpdate
 
-  priorityClassName: ""
+    priorityClassName: ""
 
-  lifecycleHooks: {}
+    lifecycleHooks: {}
 
-  extraEnvVars: []
-  extraEnvVarsCM:
-  extraEnvVarsSecret:
+    extraEnvVars: []
+    extraEnvVarsCM:
+    extraEnvVarsSecret:
+
+  - name: helloapp
+    image:
+      registry: docker.io
+      repository: karthequian/helloworld
+      tag: latest
+
+      pullPolicy: IfNotPresent
+      pullSecrets: []
+
+      debug: false
+
+    replicaCount: 2
+
+    livenessProbe:
+      enabled: false
+      httpGet:
+        path: /
+        port: 80
+      initialDelaySeconds: 5
+      periodSeconds: 5
+      timeoutSeconds: 5
+      failureThreshold: 5
+      successThreshold: 5
+
+    readinessProbe:
+      enabled: false
+      httpGet:
+        path: /
+        port: 80
+      initialDelaySeconds: 5
+      periodSeconds: 5
+      timeoutSeconds: 5
+      failureThreshold: 5
+      successThreshold: 5
+
+    customLivenessProbe: {}
+    customReadinessProbe: {}
+
+    resources:
+      limits: {}
+      requests: {}
+
+    podSecurityContext:
+      enabled: false
+      fsGroup: 1001
+
+    containerSecurityContext:
+      enabled: false
+      runAsUser: 1001
+
+    existingConfigmap:
+
+    command: []
+    args: []
+
+    podLabels: {}
+    podAnnotations: {}
+
+    podAffinityPreset: ""
+    podAntiAffinityPreset: soft
+    nodeAffinityPreset:
+      type: ""
+      key: ""
+      values: []
+
+    affinity: {}
+    nodeSelector: {}
+    tolerations: []
+
+    updateStrategy:
+      type: RollingUpdate
+
+    priorityClassName: ""
+
+    lifecycleHooks: {}
+
+    extraEnvVars: []
+    extraEnvVarsCM:
+    extraEnvVarsSecret:
