@@ -189,3 +189,9 @@ components:
     extraEnvVars: []
     extraEnvVarsCM:
     extraEnvVarsSecret:
+
+config:
+  foo: bar
+
+existingSecrets:
+  foo: bar
