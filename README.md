@@ -15,18 +15,28 @@ Helm charts for deploying Python web and backend applications.
 helm repo add leadbook https://registry.digitalocean.com/evergreen/charts
 ```
 
-You can then run `helm search repo leadbook` to see the charts
+You can then run `helm search repo leadbook` to see all charts.
+
+To install a chart, check out `leadbook/<chart name>/values.yaml` and provide your custom `values.yaml` for your application.
 
 ```sh
-helm install my-release leadbook/<chart>
+helm install my-release leadbook/<chart name> -f values.yaml
 ```
 
 ## Uninstalling the Chart
 
-To uninstall/delete the `my-release` deployment:
+To uninstall/delete the `my-release` release:
 
-```console
+```sh
 helm delete my-release
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
+
+## Work on the Chart
+
+To view the rendered templates after editing:
+
+```sh
+helm template --debug my-release leadbook/app/ > output.yaml
+```

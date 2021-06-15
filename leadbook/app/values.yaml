@@ -8,27 +8,16 @@ fullnameOverride:
 commonLabels: {}
 commonAnnotations: {}
 
-extraDeploy: []
+# create config maps and secrets as part of the release
+config: {}
+existingSecrets: {}
 
-service:
-  enabled: true
-
-  type: LoadBalancer
-  port: 80
-  # nodePort: 30000
-
-  loadBalancerIP: []
-  loadBalancerSourceRanges: []
-  externalTrafficPolicy: Cluster
-
-ingress:
-  enabled: true
-  hosts:
-    - name: localhost
-      path: /
-
+# all components of the release (create one deployment for each)
+# the first component is the main component
+# if the app is a service, the main component is the server component
 components:
-  - name: genericapp
+  - name: main
+
     image:
       registry: docker.io
       repository: jabzta84/flaskapp
@@ -37,48 +26,13 @@ components:
       pullPolicy: IfNotPresent
       pullSecrets: []
 
-      debug: false
-
     replicaCount: 1
 
-    livenessProbe:
-      enabled: false
-      httpGet:
-        path: /
-        port: 80
-      initialDelaySeconds: 5
-      periodSeconds: 5
-      timeoutSeconds: 5
-      failureThreshold: 5
-      successThreshold: 5
+    updateStrategy:
+      type: RollingUpdate
 
-    readinessProbe:
-      enabled: false
-      httpGet:
-        path: /
-        port: 80
-      initialDelaySeconds: 5
-      periodSeconds: 5
-      timeoutSeconds: 5
-      failureThreshold: 5
-      successThreshold: 5
-
-    customLivenessProbe: {}
-    customReadinessProbe: {}
-
-    resources:
-      limits: {}
-      requests: {}
-
-    podSecurityContext:
-      enabled: false
-      fsGroup: 1001
-
-    containerSecurityContext:
-      enabled: false
-      runAsUser: 1001
-
-    existingConfigmap:
+    podLabels: {}
+    podAnnotations: {}
 
     command: []
     args: []
@@ -87,93 +41,28 @@ components:
       - name: http
         containerPort: 80
 
-    podLabels: {}
-    podAnnotations: {}
-
-    podAffinityPreset: ""
-    podAntiAffinityPreset: soft
-    nodeAffinityPreset:
-      type: ""
-      key: ""
-      values: []
-
-    affinity: {}
-    nodeSelector: {}
-    tolerations: []
-
-    updateStrategy:
-      type: RollingUpdate
-
-    priorityClassName: ""
-
-    lifecycleHooks: {}
-
+    # set environment variables directly or from config maps or secrets
     extraEnvVars: []
     extraEnvVarsCM:
     extraEnvVarsSecret:
 
-  - name: helloapp
-    image:
-      registry: docker.io
-      repository: karthequian/helloworld
-      tag: latest
-
-      pullPolicy: IfNotPresent
-      pullSecrets: []
-
-      debug: false
-
-    replicaCount: 2
-
-    livenessProbe:
-      enabled: false
-      httpGet:
-        path: /
-        port: 80
-      initialDelaySeconds: 5
-      periodSeconds: 5
-      timeoutSeconds: 5
-      failureThreshold: 5
-      successThreshold: 5
-
-    readinessProbe:
-      enabled: false
-      httpGet:
-        path: /
-        port: 80
-      initialDelaySeconds: 5
-      periodSeconds: 5
-      timeoutSeconds: 5
-      failureThreshold: 5
-      successThreshold: 5
-
-    customLivenessProbe: {}
-    customReadinessProbe: {}
-
-    resources:
-      limits: {}
-      requests: {}
+    lifecycleHooks: {}
 
     podSecurityContext:
-      enabled: false
-      fsGroup: 1001
+      enabled: true
+      runAsUser: 1000
+      runAsNonRoot: true
+      fsGroup: 1000
 
     containerSecurityContext:
-      enabled: false
-      runAsUser: 1001
+      enabled: true
+      runAsUser: 1000
+      runAsNonRoot: true
+      readOnlyRootFilesystem: false
+      allowPrivilegeEscalation: false
 
-    existingConfigmap:
-
-    command: []
-    args: []
-
-    ports:
-      - name: http
-        containerPort: 80
-
-    podLabels: {}
-    podAnnotations: {}
-
+    # various settings to manage pod allocation and priorities
+    affinity: {}
     podAffinityPreset: ""
     podAntiAffinityPreset: soft
     nodeAffinityPreset:
@@ -181,23 +70,63 @@ components:
       key: ""
       values: []
 
-    affinity: {}
     nodeSelector: {}
     tolerations: []
-
-    updateStrategy:
-      type: RollingUpdate
-
     priorityClassName: ""
 
-    lifecycleHooks: {}
+    # health checks
+    livenessProbe:
+      enabled: true
+      httpGet:
+        path: /
+        port: http
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 3
+      failureThreshold: 3
+      successThreshold: 1
 
-    extraEnvVars: []
-    extraEnvVarsCM:
-    extraEnvVarsSecret:
+    readinessProbe:
+      enabled: true
+      httpGet:
+        path: /
+        port: http
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 3
+      failureThreshold: 3
+      successThreshold: 1
 
-config:
-  foo: bar
+    resources:
+      requests:
+        cpu: "125m"
+        memory: "128Mi"
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
 
-existingSecrets:
-  foo: bar
+# extra resources to create
+# see https://github.com/bitnami/charts/blob/master/bitnami/kafka/README.md#deploying-extra-resources
+extraDeploy: []
+
+# configure the service if any
+# type: ClusterIP, NodePort, LoadBalancer
+service:
+  enabled: true
+
+  type: ClusterIP
+  port: 80
+
+  # nodePort: 30000
+
+  # loadBalancerIP: []
+  # loadBalancerSourceRanges: []
+  # externalTrafficPolicy: Cluster
+
+# add this if LoadBalancer service is enabled
+ingress:
+  enabled: false
+
+  hosts:
+    - name: app.leadbook.com
+      path: /hello
