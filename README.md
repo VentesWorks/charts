@@ -40,3 +40,19 @@ To view the rendered templates after editing:
 ```sh
 helm template --debug my-release leadbook/app/ > output.yaml
 ```
+
+To lint the chart:
+
+```sh
+helm lint leadbook/app/
+```
+
+## Publishing the Chart
+
+Increment the version number in `Chart.yaml` of the respective chart. Then make the package:
+
+```sh
+helm package leadbook/app/ -d repo/
+```
+
+Merge changes to `master` branch and push. The package will be published to the live repo.
