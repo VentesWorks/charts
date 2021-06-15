@@ -13,3 +13,4 @@ Session.vim
 
 # chart dependencies
 *.tgz
+!repo/*.tgz

@@ -12,7 +12,7 @@ Helm charts for deploying Python web and backend applications.
 ## How Do I Install These Charts?
 
 ```sh
-helm repo add leadbook https://registry.digitalocean.com/evergreen/charts
+helm repo add leadbook https://leadbook.github.io/helm-charts
 ```
 
 You can then run `helm search repo leadbook` to see all charts.
