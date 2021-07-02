@@ -1,5 +1,7 @@
+{{- $top := . -}}
 {{- range .Values.components }}
-  {{- include "common.warnings.rollingTag" .image }}
+  {{- $comp := merge $top.Values.componentDefaults . -}}
+  {{- include "common.warnings.rollingTag" $comp.image }}
 {{- end }}
 {{- include "app.validateValues" . }}
 
