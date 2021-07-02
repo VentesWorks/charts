@@ -1,6 +1,6 @@
-{{ $top := . -}}
-{{ range .Values.components -}}
+{{- $top := . -}}
 {{- $comp := merge .Values.componentDefaults . -}}
+{{ range .Values.components -}}
 ---
 apiVersion: {{ include "common.capabilities.deployment.apiVersion" $top }}
 kind: Deployment
