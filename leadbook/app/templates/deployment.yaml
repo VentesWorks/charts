@@ -1,13 +1,14 @@
 {{ $top := . -}}
 {{ range .Values.components -}}
+{{- $comp := merge .Values.componentDefaults . -}}
 ---
 apiVersion: {{ include "common.capabilities.deployment.apiVersion" $top }}
 kind: Deployment
 metadata:
-  name: {{ template "common.names.fullname" $top }}-{{ .name }}
+  name: {{ template "common.names.fullname" $top }}-{{ $comp.name }}
   namespace: {{ $top.Release.Namespace | quote }}
   labels: {{- include "common.labels.standard" $top | nindent 4 }}
-    app.kubernetes.io/component: {{ .name }}
+    app.kubernetes.io/component: {{ $comp.name }}
     {{- if $top.Values.commonLabels }}
       {{- include "common.tplvalues.render" ( dict "value" $top.Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
@@ -15,88 +16,88 @@ metadata:
     annotations: {{- include "common.tplvalues.render" ( dict "value" $top.Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
-  replicas: {{ .replicaCount }}
-  {{- if .updateStrategy }}
-  strategy: {{- toYaml .updateStrategy | nindent 4 }}
+  replicas: {{ $comp.replicaCount }}
+  {{- if $comp.updateStrategy }}
+  strategy: {{- toYaml $comp.updateStrategy | nindent 4 }}
   {{- end }}
   selector:
     matchLabels: {{- include "common.labels.matchLabels" $top | nindent 6 }}
-      app.kubernetes.io/component: {{ .name }}
+      app.kubernetes.io/component: {{ $comp.name }}
   template:
     metadata:
-      {{- if .podAnnotations }}
-      annotations: {{- include "common.tplvalues.render" (dict "value" .podAnnotations "context" $) | nindent 8 }}
+      {{- if $comp.podAnnotations }}
+      annotations: {{- include "common.tplvalues.render" (dict "value" $comp.podAnnotations "context" $) | nindent 8 }}
       {{- end }}
       labels: {{- include "common.labels.standard" $top | nindent 8 }}
-        app.kubernetes.io/component: {{ .name }}
-        {{- if .podLabels }}
-        {{- include "common.tplvalues.render" (dict "value" .podLabels "context" $) | nindent 8 }}
+        app.kubernetes.io/component: {{ $comp.name }}
+        {{- if $comp.podLabels }}
+        {{- include "common.tplvalues.render" (dict "value" $comp.podLabels "context" $) | nindent 8 }}
         {{- end }}
     spec:
-      {{- include "common.images.pullSecrets" (dict "images" (list .image) "global" $top.Values.global) -}}
-      {{- if .affinity }}
-      affinity: {{- include "common.tplvalues.render" ( dict "value" .affinity "context" $) | nindent 8 }}
+      {{- include "common.images.pullSecrets" (dict "images" (list $comp.image) "global" $top.Values.global) -}}
+      {{- if $comp.affinity }}
+      affinity: {{- include "common.tplvalues.render" ( dict "value" $comp.affinity "context" $) | nindent 8 }}
       {{- else }}
       affinity:
-        podAffinity: {{- include "common.affinities.pods" (dict "type" .podAffinityPreset "component" .name "context" $) | nindent 10 }}
-        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .podAntiAffinityPreset "component" .name "context" $) | nindent 10 }}
-        nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .nodeAffinityPreset.type "key" .nodeAffinityPreset.key "values" .nodeAffinityPreset.values) | nindent 10 }}
+        podAffinity: {{- include "common.affinities.pods" (dict "type" $comp.podAffinityPreset "component" $comp.name "context" $) | nindent 10 }}
+        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" $comp.podAntiAffinityPreset "component" $comp.name "context" $) | nindent 10 }}
+        nodeAffinity: {{- include "common.affinities.nodes" (dict "type" $comp.nodeAffinityPreset.type "key" $comp.nodeAffinityPreset.key "values" $comp.nodeAffinityPreset.values) | nindent 10 }}
       {{- end }}
-      {{- if .nodeSelector }}
-      nodeSelector: {{- include "common.tplvalues.render" ( dict "value" .nodeSelector "context" $) | nindent 8 }}
+      {{- if $comp.nodeSelector }}
+      nodeSelector: {{- include "common.tplvalues.render" ( dict "value" $comp.nodeSelector "context" $) | nindent 8 }}
       {{- end }}
-      {{- if .tolerations }}
-      tolerations: {{- include "common.tplvalues.render" (dict "value" .tolerations "context" $top) | nindent 8 }}
+      {{- if $comp.tolerations }}
+      tolerations: {{- include "common.tplvalues.render" (dict "value" $comp.tolerations "context" $top) | nindent 8 }}
       {{- end }}
-      {{- if .priorityClassName }}
-      priorityClassName: {{ .priorityClassName | quote }}
+      {{- if $comp.priorityClassName }}
+      priorityClassName: {{ $comp.priorityClassName | quote }}
       {{- end }}
-      {{- if .podSecurityContext.enabled }}
-      securityContext: {{- omit .podSecurityContext "enabled" | toYaml | nindent 8 }}
+      {{- if $comp.podSecurityContext.enabled }}
+      securityContext: {{- omit $comp.podSecurityContext "enabled" | toYaml | nindent 8 }}
       {{- end }}
       containers:
-        - name: {{ .name }}
-          image: {{ include "common.images.image" (dict "imageRoot" .image "global" $top.Values.global) }}
-          imagePullPolicy: {{ .image.pullPolicy }}
-          {{- if .lifecycleHooks }}
-          lifecycle: {{- include "common.tplvalues.render" (dict "value" .lifecycleHooks "context" $) | nindent 12 }}
+        - name: {{ $comp.name }}
+          image: {{ include "common.images.image" (dict "imageRoot" $comp.image "global" $top.Values.global) }}
+          imagePullPolicy: {{ $comp.image.pullPolicy }}
+          {{- if $comp.lifecycleHooks }}
+          lifecycle: {{- include "common.tplvalues.render" (dict "value" $comp.lifecycleHooks "context" $) | nindent 12 }}
           {{- end }}
-          {{- if .containerSecurityContext.enabled }}
-          securityContext: {{- omit .containerSecurityContext "enabled" | toYaml | nindent 12 }}
+          {{- if $comp.containerSecurityContext.enabled }}
+          securityContext: {{- omit $comp.containerSecurityContext "enabled" | toYaml | nindent 12 }}
           {{- end }}
-          {{- if .command }}
-          command: {{- include "common.tplvalues.render" (dict "value" .command "context" $) | nindent 12 }}
+          {{- if $comp.command }}
+          command: {{- include "common.tplvalues.render" (dict "value" $comp.command "context" $) | nindent 12 }}
           {{- end }}
-          {{- if .args }}
-          args: {{- include "common.tplvalues.render" (dict "value" .args "context" $) | nindent 12 }}
+          {{- if $comp.args }}
+          args: {{- include "common.tplvalues.render" (dict "value" $comp.args "context" $) | nindent 12 }}
           {{- end }}
-          {{- if .ports }}
-          ports: {{- toYaml .ports | nindent 12 }}
+          {{- if $comp.ports }}
+          ports: {{- toYaml $comp.ports | nindent 12 }}
           {{- end}}
           env:
-            {{- if .extraEnvVars }}
-            {{- include "common.tplvalues.render" (dict "value" .extraEnvVars "context" $) | nindent 12 }}
+            {{- if $comp.extraEnvVars }}
+            {{- include "common.tplvalues.render" (dict "value" $comp.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
           envFrom:
-            {{- if .extraEnvVarsCM }}
+            {{- if $comp.extraEnvVarsCM }}
             - configMapRef:
-                name: {{ include "common.tplvalues.render" (dict "value" .extraEnvVarsCM "context" $) }}
+                name: {{ include "common.tplvalues.render" (dict "value" $comp.extraEnvVarsCM "context" $) }}
             {{- end }}
-            {{- if .extraEnvVarsSecret }}
+            {{- if $comp.extraEnvVarsSecret }}
             - secretRef:
-                name: {{ include "common.tplvalues.render" (dict "value" .extraEnvVarsSecret "context" $) }}
+                name: {{ include "common.tplvalues.render" (dict "value" $comp.extraEnvVarsSecret "context" $) }}
             {{- end }}
-          {{- if .resources }}
-          resources: {{- toYaml .resources | nindent 12 }}
+          {{- if $comp.resources }}
+          resources: {{- toYaml $comp.resources | nindent 12 }}
           {{- end }}
-          {{- if .livenessProbe.enabled }}
-          livenessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .livenessProbe "enabled") "context" $) | nindent 12 }}
-          {{- else if .customLivenessProbe }}
-          livenessProbe: {{- include "common.tplvalues.render" (dict "value" .customLivenessProbe "context" $) | nindent 12 }}
+          {{- if $comp.livenessProbe.enabled }}
+          livenessProbe: {{- include "common.tplvalues.render" (dict "value" (omit $comp.livenessProbe "enabled") "context" $) | nindent 12 }}
+          {{- else if $comp.customLivenessProbe }}
+          livenessProbe: {{- include "common.tplvalues.render" (dict "value" $comp.customLivenessProbe "context" $) | nindent 12 }}
           {{- end }}
-          {{- if .readinessProbe.enabled }}
-          readinessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .readinessProbe "enabled") "context" $) | nindent 12 }}
-          {{- else if .customReadinessProbe }}
-          readinessProbe: {{- include "common.tplvalues.render" (dict "value" .customReadinessProbe "context" $) | nindent 12 }}
+          {{- if $comp.readinessProbe.enabled }}
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" (omit $comp.readinessProbe "enabled") "context" $) | nindent 12 }}
+          {{- else if $comp.customReadinessProbe }}
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" $comp.customReadinessProbe "context" $) | nindent 12 }}
           {{- end }}
 {{ end -}}

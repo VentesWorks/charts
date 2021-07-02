@@ -12,98 +12,71 @@ commonAnnotations: {}
 config: {}
 existingSecrets: {}
 
+# defaults of component configs
+componentDefaults:
+  image:
+    registry: registry.digitalocean.com
+    pullPolicy: Always
+    pullSecrets: []
+
+  replicaCount: 1
+
+  updateStrategy:
+    type: RollingUpdate
+
+  podLabels: {}
+  podAnnotations: {}
+
+  command: []
+  args: []
+
+  ports: []
+
+  # set environment variables directly or from config maps or secrets
+  extraEnvVars: []
+  extraEnvVarsCM:
+  extraEnvVarsSecret:
+
+  lifecycleHooks: {}
+
+  podSecurityContext:
+    enabled: true
+    runAsUser: 1000
+    runAsNonRoot: true
+    fsGroup: 1000
+
+  containerSecurityContext:
+    enabled: true
+    runAsUser: 1000
+    runAsNonRoot: true
+    readOnlyRootFilesystem: false
+    allowPrivilegeEscalation: false
+
+  # various settings to manage pod allocation and priorities
+  affinity: {}
+  podAffinityPreset: ""
+  podAntiAffinityPreset: soft
+  nodeAffinityPreset:
+    type: ""
+    key: ""
+    values: []
+
+  nodeSelector: {}
+  tolerations: []
+  priorityClassName: ""
+
+  livenessProbe:
+    enabled: false
+
+  readinessProbe:
+    enabled: false
+
+  resources: {}
+
 # all components of the release (create one deployment for each)
 # the first component is the main component
 # if the app is a service, the main component is the server component
-components:
-  - name: main
-
-    image:
-      registry: docker.io
-      repository: jabzta84/flaskapp
-      tag: latestv4
-
-      pullPolicy: IfNotPresent
-      pullSecrets: []
-
-    replicaCount: 1
-
-    updateStrategy:
-      type: RollingUpdate
-
-    podLabels: {}
-    podAnnotations: {}
-
-    command: []
-    args: []
-
-    ports:
-      - name: http
-        containerPort: 80
-
-    # set environment variables directly or from config maps or secrets
-    extraEnvVars: []
-    extraEnvVarsCM:
-    extraEnvVarsSecret:
-
-    lifecycleHooks: {}
-
-    podSecurityContext:
-      enabled: true
-      runAsUser: 1000
-      runAsNonRoot: true
-      fsGroup: 1000
-
-    containerSecurityContext:
-      enabled: true
-      runAsUser: 1000
-      runAsNonRoot: true
-      readOnlyRootFilesystem: false
-      allowPrivilegeEscalation: false
-
-    # various settings to manage pod allocation and priorities
-    affinity: {}
-    podAffinityPreset: ""
-    podAntiAffinityPreset: soft
-    nodeAffinityPreset:
-      type: ""
-      key: ""
-      values: []
-
-    nodeSelector: {}
-    tolerations: []
-    priorityClassName: ""
-
-    # health checks
-    livenessProbe:
-      enabled: true
-      httpGet:
-        path: /
-        port: http
-      initialDelaySeconds: 10
-      periodSeconds: 10
-      timeoutSeconds: 3
-      failureThreshold: 3
-      successThreshold: 1
-
-    readinessProbe:
-      enabled: true
-      httpGet:
-        path: /
-        port: http
-      initialDelaySeconds: 5
-      periodSeconds: 10
-      timeoutSeconds: 3
-      failureThreshold: 3
-      successThreshold: 1
-
-    resources:
-      requests:
-        cpu: "125m"
-        memory: "128Mi"
-      limits:
-        cpu: "500m"
-        memory: "512Mi"
+components: []
 
 # extra resources to create
 # see https://github.com/bitnami/charts/blob/master/bitnami/kafka/README.md#deploying-extra-resources
@@ -112,10 +85,10 @@ extraDeploy: []
 # configure the service if any
 # type: ClusterIP, NodePort, LoadBalancer
 service:
-  enabled: true
-
-  type: ClusterIP
-  port: 80
+  enabled: false
+  # type: ClusterIP
+  # annotations: {}
+  # port: 80
 
   # nodePort: 30000
 
