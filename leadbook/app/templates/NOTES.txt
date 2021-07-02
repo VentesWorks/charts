@@ -1,10 +1,11 @@
-{{- $protocol := (index (index .Values.components 0).ports 0).name -}}
 {{- range .Values.components }}
   {{- include "common.warnings.rollingTag" .image }}
 {{- end }}
 {{- include "app.validateValues" . }}
 
-{{- if .Values.ingress.enabled }}
+{{- if .Values.service.enabled }}
+  {{- $protocol := (index (index .Values.components 0).ports 0).name -}}
+  {{- if .Values.ingress.enabled }}
 
 1. Get the application URL indicated on the Ingress Rule and associate it to your cluster external IP:
 
@@ -14,21 +15,21 @@
   echo "application URL: {{ $protocol }}://$APP_HOST:$PORT/"
   echo "$CLUSTER_IP $APP_HOST" | sudo tee -a /etc/hosts
 
-{{- else }}
+  {{- else }}
 1. Get the application URL by running:
 
-  {{- if eq "NodePort" .Values.service.type }}
+    {{- if eq "NodePort" .Values.service.type }}
 
   export APP_HOST=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
   export PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "common.names.fullname" . }})
   echo URL  : {{ $protocol }}://$APP_HOST:$PORT
 
-  {{- else if eq "ClusterIP" .Values.service.type }}
+    {{- else if eq "ClusterIP" .Values.service.type }}
 
   echo URL  : {{ $protocol }}://127.0.0.1:8080
   kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ include "common.names.fullname" . }} 8080:{{ .Values.service.port }}
 
-  {{- else if eq "LoadBalancer" .Values.service.type }}
+    {{- else if eq "LoadBalancer" .Values.service.type }}
 
   NOTE: It may take a few minutes for the LoadBalancer IP to be available.
         Watch the status with: 'kubectl get svc --namespace {{ .Release.Namespace }} -w {{ include "common.names.fullname" . }}'
@@ -36,5 +37,6 @@
   export APP_HOST=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "common.names.fullname" . }} --template "{{ "{{ range (index .status.loadBalancer.ingress 0) }}{{ . }}{{ end }}" }}")
   export PORT={{ .Values.service.port }}
   echo URL  : {{ $protocol }}://$APP_HOST:$PORT
+    {{- end }}
   {{- end }}
 {{- end }}
