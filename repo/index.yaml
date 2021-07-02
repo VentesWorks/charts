@@ -4,7 +4,29 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-02T15:40:29.787832+08:00"
+    created: "2021-07-02T15:56:22.684788+08:00"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 1.x.x
+    description: A helm chart for deploying Python web and backend applications
+    digest: 5eabb4f12eb17df308c2de7181bb4f4cb7328569626671521c340495484658bc
+    home: https://www.leadbook.com
+    maintainers:
+    - email: cto@leadbook.com
+      name: Leadbook
+    name: app
+    sources:
+    - https://github.com/VentesWorks/
+    urls:
+    - https://ventesworks.github.io/charts/repo/app-0.1.4.tgz
+    version: 0.1.4
+  - annotations:
+      category: ApplicationServer
+    apiVersion: v2
+    created: "2021-07-02T15:56:22.682751+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -26,7 +48,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-02T15:40:29.785863+08:00"
+    created: "2021-07-02T15:56:22.68082+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -48,7 +70,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-02T15:40:29.783994+08:00"
+    created: "2021-07-02T15:56:22.678965+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -70,7 +92,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-02T15:40:29.781551+08:00"
+    created: "2021-07-02T15:56:22.676216+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -89,4 +111,4 @@ entries:
     urls:
     - https://ventesworks.github.io/charts/repo/app-0.1.0.tgz
     version: 0.1.0
-generated: "2021-07-02T15:40:29.776482+08:00"
+generated: "2021-07-02T15:56:22.672737+08:00"

@@ -79,13 +79,13 @@ spec:
             {{- include "common.tplvalues.render" (dict "value" $comp.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
           envFrom:
-            {{- if $comp.extraEnvVarsCM }}
+            {{- range $comp.extraEnvVarsCMs }}
             - configMapRef:
-                name: {{ include "common.tplvalues.render" (dict "value" $comp.extraEnvVarsCM "context" $) }}
+                name: {{ include "common.tplvalues.render" (dict "value" . "context" $) }}
             {{- end }}
-            {{- if $comp.extraEnvVarsSecret }}
+            {{- range $comp.extraEnvVarsSecrets }}
             - secretRef:
-                name: {{ include "common.tplvalues.render" (dict "value" $comp.extraEnvVarsSecret "context" $) }}
+                name: {{ include "common.tplvalues.render" (dict "value" . "context" $) }}
             {{- end }}
           {{- if $comp.resources }}
           resources: {{- toYaml $comp.resources | nindent 12 }}

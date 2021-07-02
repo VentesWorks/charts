@@ -34,8 +34,8 @@ componentDefaults:
 
   # set environment variables directly or from config maps or secrets
   extraEnvVars: []
-  extraEnvVarsCM:
-  extraEnvVarsSecret:
+  extraEnvVarsCMs: []
+  extraEnvVarsSecrets: []
 
   lifecycleHooks: {}
 
