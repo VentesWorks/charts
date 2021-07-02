@@ -9,11 +9,11 @@ dependencies:
     version: 1.x.x
 description: A helm chart for deploying Python web and backend applications
 engine: gotpl
-home: https://www.leadbook.com
+home: https://github.com/VentesWorks/charts
 maintainers:
   - email: cto@leadbook.com
     name: Leadbook
 name: app
 sources:
-  - https://github.com/VentesWorks/
+  - https://github.com/VentesWorks/charts/tree/master/leadbook/app
 version: 0.1.4

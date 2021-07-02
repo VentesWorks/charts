@@ -4,7 +4,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-02T15:56:22.684788+08:00"
+    created: "2021-07-02T22:11:45.215711+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -26,7 +26,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-02T15:56:22.682751+08:00"
+    created: "2021-07-02T22:11:45.213667+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -48,7 +48,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-02T15:56:22.68082+08:00"
+    created: "2021-07-02T22:11:45.211616+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -70,7 +70,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-02T15:56:22.678965+08:00"
+    created: "2021-07-02T22:11:45.209693+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -92,7 +92,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-02T15:56:22.676216+08:00"
+    created: "2021-07-02T22:11:45.207129+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -111,4 +111,23 @@ entries:
     urls:
     - https://ventesworks.github.io/charts/repo/app-0.1.0.tgz
     version: 0.1.0
-generated: "2021-07-02T15:56:22.672737+08:00"
+  pypiserver:
+  - annotations:
+      category: ApplicationServer
+    apiVersion: v2
+    created: "2021-07-02T22:11:45.216531+08:00"
+    description: A helm chart for deploying PyPI server
+    digest: e89692bf64ae2f5592ecf58c5eb219ac34cb959ea5dc9a6d4a06ba26294db875
+    home: https://github.com/VentesWorks/charts
+    maintainers:
+    - email: cto@leadbook.com
+      name: Leadbook
+    name: pypiserver
+    sources:
+    - https://github.com/VentesWorks/charts/tree/master/leadbook/pypiserver
+    - https://github.com/pypiserver/pypiserver
+    - https://pypi.org/project/pypiserver/
+    urls:
+    - https://ventesworks.github.io/charts/repo/pypiserver-0.1.5.tgz
+    version: 0.1.5
+generated: "2021-07-02T22:11:45.203292+08:00"

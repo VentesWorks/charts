@@ -1,0 +1,15 @@
+annotations:
+  category: ApplicationServer
+apiVersion: v2
+description: A helm chart for deploying PyPI server
+engine: gotpl
+home: https://github.com/VentesWorks/charts
+maintainers:
+  - email: cto@leadbook.com
+    name: Leadbook
+name: pypiserver
+sources:
+  - https://github.com/VentesWorks/charts/tree/master/leadbook/pypiserver
+  - https://github.com/pypiserver/pypiserver
+  - https://pypi.org/project/pypiserver/
+version: 0.1.5
