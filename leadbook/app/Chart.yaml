@@ -16,4 +16,4 @@ maintainers:
 name: app
 sources:
   - https://github.com/VentesWorks/
-version: 0.1.2
+version: 0.1.3

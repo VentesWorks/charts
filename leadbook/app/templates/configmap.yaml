@@ -13,6 +13,6 @@ metadata:
   {{- end }}
 data:
 {{- range $key, $value := .Values.config }}
-  {{ $key }}: {{ $value }}
+  {{ $key }}: {{ $value | quote }}
 {{- end }}
 {{- end }}
