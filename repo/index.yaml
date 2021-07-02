@@ -4,7 +4,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-02T22:18:26.201401+08:00"
+    created: "2021-07-02T22:27:47.51758+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -26,7 +26,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-02T22:18:26.198961+08:00"
+    created: "2021-07-02T22:27:47.513971+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -48,7 +48,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-02T22:18:26.196776+08:00"
+    created: "2021-07-02T22:27:47.509102+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -70,7 +70,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-02T22:18:26.194639+08:00"
+    created: "2021-07-02T22:27:47.505416+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -92,7 +92,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-02T22:18:26.191226+08:00"
+    created: "2021-07-02T22:27:47.501758+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -115,9 +115,9 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-02T22:18:26.202881+08:00"
+    created: "2021-07-02T22:27:47.519717+08:00"
     description: A helm chart for deploying PyPI server
-    digest: 49e64929cb5e07727ec2465c517be2f600b31508ff6305b1143f3d78b6c8d1fb
+    digest: 9bc45db22737c364b5e461670b9049b307990719fce3bb3f0797f6d96e9f619c
     home: https://github.com/VentesWorks/charts
     maintainers:
     - email: cto@leadbook.com
@@ -130,4 +130,4 @@ entries:
     urls:
     - https://ventesworks.github.io/charts/repo/pypiserver-2.2.2.tgz
     version: 2.2.2
-generated: "2021-07-02T22:18:26.186316+08:00"
+generated: "2021-07-02T22:27:47.493752+08:00"
