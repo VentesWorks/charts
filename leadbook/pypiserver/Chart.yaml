@@ -12,4 +12,4 @@ sources:
   - https://github.com/VentesWorks/charts/tree/master/leadbook/pypiserver
   - https://github.com/pypiserver/pypiserver
   - https://pypi.org/project/pypiserver/
-version: 0.1.5
+version: 2.2.2
