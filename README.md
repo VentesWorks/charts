@@ -55,4 +55,10 @@ Increment the version number in `Chart.yaml` of the respective chart. Then make 
 helm package leadbook/app/ -d repo/
 ```
 
+Recreate the repo index
+
+```sh
+helm repo index repo/ --url https://ventesworks.github.io/charts/repo/
+```
+
 Merge changes to `master` branch and push. The package will be published to the live repo.

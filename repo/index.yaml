@@ -4,7 +4,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-06-15T10:27:34.882524+08:00"
+    created: "2021-07-02T11:01:37.151584+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -21,6 +21,6 @@ entries:
     sources:
     - https://github.com/VentesWorks/
     urls:
-    - https://leadbook.github.io/helm-charts/app-0.1.0.tgz
+    - https://ventesworks.github.io/charts/repo/app-0.1.0.tgz
     version: 0.1.0
-generated: "2021-06-15T10:27:34.868741+08:00"
+generated: "2021-07-02T11:01:37.147324+08:00"
