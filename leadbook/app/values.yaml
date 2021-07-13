@@ -12,17 +12,12 @@ commonAnnotations: {}
 config: {}
 existingSecrets: {}
 
-# defaults of component configs
-componentDefaults:
+# defaults of pod configs
+podDefaults:
   image:
     registry: registry.digitalocean.com
     pullPolicy: Always
     pullSecrets: []
-
-  replicaCount: 1
-
-  updateStrategy:
-    type: RollingUpdate
 
   podLabels: {}
   podAnnotations: {}
@@ -30,14 +25,10 @@ componentDefaults:
   command: []
   args: []
 
-  ports: []
-
   # set environment variables directly or from config maps or secrets
   extraEnvVars: []
   extraEnvVarsCMs: []
   extraEnvVarsSecrets: []
-
-  lifecycleHooks: {}
 
   podSecurityContext:
     enabled: true
@@ -65,18 +56,38 @@ componentDefaults:
   tolerations: []
   priorityClassName: ""
 
+  resources: {}
+
+# defaults of component configs, override pod config defaults
+componentDefaults:
+  replicaCount: 1
+
+  updateStrategy:
+    type: RollingUpdate
+
+  lifecycleHooks: {}
+
+  ports: []
+
   livenessProbe:
     enabled: false
 
   readinessProbe:
     enabled: false
 
-  resources: {}
+# default of cronjob configs, override pod config defaults
+cronjobDefaults:
+  schedule: 0 0 * * *
+  historyLimit: 30
+  restartOnFailure: true
 
 # all components of the release (create one deployment for each)
 # the first component is the main component
 # if the app is a service, the main component is the server component
 components: []
+
+# all cronjobs of the release (create one cronjob for each)
+cronjobs: []
 
 # extra resources to create
 # see https://github.com/bitnami/charts/blob/master/bitnami/kafka/README.md#deploying-extra-resources

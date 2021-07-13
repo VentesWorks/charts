@@ -1,0 +1,87 @@
+{{- $top := . -}}
+{{ range .Values.cronjobs -}}
+{{- $job := merge dict $top.Values.podDefaults $top.Values.cronjobDefaults . -}}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ template "common.names.fullname" $top }}-{{ $job.name }}
+  namespace: {{ $top.Release.Namespace | quote }}
+  labels: {{- include "common.labels.standard" $top | nindent 4 }}
+    app.kubernetes.io/component: {{ $job.name }}
+    {{- if $top.Values.commonLabels }}
+      {{- include "common.tplvalues.render" (dict "value" $top.Values.commonLabels "context" $) | nindent 4 }}
+    {{- end }}
+  {{- if $top.Values.commonAnnotations }}
+    annotations: {{- include "common.tplvalues.render" (dict "value" $top.Values.commonAnnotations "context" $) | nindent 4 }}
+  {{- end }}
+spec:
+  schedule: {{ $job.schedule | quote }}
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: {{ $job.historyLimit }}
+  failedJobsHistoryLimit: {{ $job.historyLimit }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          {{- if $job.podAnnotations }}
+          annotations: {{- include "common.tplvalues.render" (dict "value" $job.podAnnotations "context" $) | nindent 12 }}
+          {{- end }}
+          labels: {{- include "common.labels.standard" $top | nindent 12 }}
+            app.kubernetes.io/component: {{ $job.name }}
+            {{- if $job.podLabels }}
+            {{- include "common.tplvalues.render" (dict "value" $job.podLabels "context" $) | nindent 12 }}
+            {{- end }}
+        spec:
+          {{- include "common.images.pullSecrets" (dict "images" (list $job.image) "global" $top.Values.global) | nindent 10 -}}
+          {{- if $job.affinity }}
+          affinity: {{- include "common.tplvalues.render" (dict "value" $job.affinity "context" $) | nindent 12 }}
+          {{- else }}
+          affinity:
+            podAffinity: {{- include "common.affinities.pods" (dict "type" $job.podAffinityPreset "component" $job.name "context" $) | nindent 14 }}
+            podAntiAffinity: {{- include "common.affinities.pods" (dict "type" $job.podAntiAffinityPreset "component" $job.name "context" $) | nindent 14 }}
+            nodeAffinity: {{- include "common.affinities.nodes" (dict "type" $job.nodeAffinityPreset.type "key" $job.nodeAffinityPreset.key "values" $job.nodeAffinityPreset.values) | nindent 14 }}
+          {{- end }}
+          {{- if $job.nodeSelector }}
+          nodeSelector: {{- include "common.tplvalues.render" (dict "value" $job.nodeSelector "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if $job.tolerations }}
+          tolerations: {{- include "common.tplvalues.render" (dict "value" $job.tolerations "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if $job.priorityClassName }}
+          priorityClassName: {{ $job.priorityClassName | quote }}
+          {{- end }}
+          {{- if $job.podSecurityContext.enabled }}
+          securityContext: {{- omit $job.podSecurityContext "enabled" | toYaml | nindent 12 }}
+          {{- end }}
+          restartPolicy: {{ if $job.restartOnFailure }}OnFailure{{ else }}Never{{ end }}
+          containers:
+            - name: {{ $job.name }}
+              image: {{ include "common.images.image" (dict "imageRoot" $job.image "global" $top.Values.global) }}
+              imagePullPolicy: {{ $job.image.pullPolicy }}
+              {{- if $job.containerSecurityContext.enabled }}
+              securityContext: {{- omit $job.containerSecurityContext "enabled" | toYaml | nindent 16 }}
+              {{- end }}
+              {{- if $job.command }}
+              command: {{- include "common.tplvalues.render" (dict "value" $job.command "context" $) | nindent 16 }}
+              {{- end }}
+              {{- if $job.args }}
+              args: {{- include "common.tplvalues.render" (dict "value" $job.args "context" $) | nindent 16 }}
+              {{- end }}
+              env:
+                {{- if $job.extraEnvVars }}
+                {{- include "common.tplvalues.render" (dict "value" $job.extraEnvVars "context" $) | nindent 16 }}
+                {{- end }}
+              envFrom:
+                {{- range $job.extraEnvVarsCMs }}
+                - configMapRef:
+                    name: {{ include "common.tplvalues.render" (dict "value" . "context" $) }}
+                {{- end }}
+                {{- range $job.extraEnvVarsSecrets }}
+                - secretRef:
+                    name: {{ include "common.tplvalues.render" (dict "value" . "context" $) }}
+                {{- end }}
+              {{- if $job.resources }}
+              resources: {{- toYaml $job.resources | nindent 16 }}
+              {{- end }}
+{{- end }}
