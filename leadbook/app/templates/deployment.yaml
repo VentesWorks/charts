@@ -34,7 +34,7 @@ spec:
         {{- include "common.tplvalues.render" (dict "value" $comp.podLabels "context" $) | nindent 8 }}
         {{- end }}
     spec:
-      {{- include "common.images.pullSecrets" (dict "images" (list $comp.image) "global" $top.Values.global) -}}
+      {{- include "common.images.pullSecrets" (dict "images" (list $comp.image) "global" $top.Values.global) | nindent 6 -}}
       {{- if $comp.affinity }}
       affinity: {{- include "common.tplvalues.render" ( dict "value" $comp.affinity "context" $) | nindent 8 }}
       {{- else }}
