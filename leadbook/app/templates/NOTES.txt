@@ -1,7 +1,11 @@
 {{- $top := . -}}
 {{- range .Values.components }}
-  {{- $comp := merge $top.Values.componentDefaults . -}}
+  {{- $comp := merge dict $top.Values.podDefaults $top.Values.componentDefaults . -}}
   {{- include "common.warnings.rollingTag" $comp.image }}
+{{- end }}
+{{- range .Values.cronjobs }}
+  {{- $job := merge dict $top.Values.podDefaults $top.Values.cronjobDefaults . -}}
+  {{- include "common.warnings.rollingTag" $job.image }}
 {{- end }}
 {{- include "app.validateValues" . }}
 
