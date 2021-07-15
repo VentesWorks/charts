@@ -38,7 +38,7 @@ The command removes all the Kubernetes components associated with the chart and 
 To view the rendered templates after editing:
 
 ```sh
-helm template --debug my-release leadbook/app/ > output.yaml
+helm template --debug my-release leadbook/app/ -f values.yaml > output.yaml
 ```
 
 To lint the chart:

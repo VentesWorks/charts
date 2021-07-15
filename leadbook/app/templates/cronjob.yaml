@@ -1,6 +1,6 @@
 {{- $top := . -}}
 {{ range .Values.cronjobs -}}
-{{- $job := merge dict $top.Values.podDefaults $top.Values.cronjobDefaults . -}}
+{{- $job := merge dict (deepCopy $top.Values.podDefaults) (deepCopy $top.Values.componentDefaults) . -}}
 ---
 apiVersion: batch/v1
 kind: CronJob

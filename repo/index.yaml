@@ -4,7 +4,29 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-14T11:17:07.415692+08:00"
+    created: "2021-07-15T14:20:31.045462+08:00"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 1.x.x
+    description: A helm chart for deploying Python web and backend applications
+    digest: f77304f38913cfb9e72186eb6df4edcb10e875760dec8dd1dafc26e476015494
+    home: https://github.com/VentesWorks/charts
+    maintainers:
+    - email: cto@leadbook.com
+      name: Leadbook
+    name: app
+    sources:
+    - https://github.com/VentesWorks/charts/tree/master/leadbook/app
+    urls:
+    - https://ventesworks.github.io/charts/repo/app-0.2.1.tgz
+    version: 0.2.1
+  - annotations:
+      category: ApplicationServer
+    apiVersion: v2
+    created: "2021-07-15T14:20:31.042819+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -26,7 +48,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-14T11:17:07.412795+08:00"
+    created: "2021-07-15T14:20:31.038672+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -48,7 +70,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-14T11:17:07.410785+08:00"
+    created: "2021-07-15T14:20:31.034487+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -70,7 +92,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-14T11:17:07.408766+08:00"
+    created: "2021-07-15T14:20:31.031287+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -92,7 +114,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-14T11:17:07.406721+08:00"
+    created: "2021-07-15T14:20:31.027487+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -114,7 +136,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-14T11:17:07.404666+08:00"
+    created: "2021-07-15T14:20:31.024551+08:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -137,7 +159,7 @@ entries:
   - annotations:
       category: ApplicationServer
     apiVersion: v2
-    created: "2021-07-14T11:17:07.417845+08:00"
+    created: "2021-07-15T14:20:31.047212+08:00"
     description: A helm chart for deploying PyPI server
     digest: 9bc45db22737c364b5e461670b9049b307990719fce3bb3f0797f6d96e9f619c
     home: https://github.com/VentesWorks/charts
@@ -152,4 +174,4 @@ entries:
     urls:
     - https://ventesworks.github.io/charts/repo/pypiserver-2.2.2.tgz
     version: 2.2.2
-generated: "2021-07-14T11:17:07.402371+08:00"
+generated: "2021-07-15T14:20:31.018578+08:00"

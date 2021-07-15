@@ -1,6 +1,6 @@
 {{- $top := . -}}
 {{ range .Values.components -}}
-{{- $comp := merge dict $top.Values.podDefaults $top.Values.componentDefaults . -}}
+{{- $comp := merge dict (deepCopy $top.Values.podDefaults) (deepCopy $top.Values.componentDefaults) . -}}
 ---
 apiVersion: {{ include "common.capabilities.deployment.apiVersion" $top }}
 kind: Deployment
