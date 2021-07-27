@@ -1,10 +1,10 @@
 {{- $top := . -}}
 {{- range .Values.components }}
-  {{- $comp := merge dict (deepCopy $top.Values.podDefaults) (deepCopy $top.Values.componentDefaults) . -}}
+  {{- $comp := merge . (deepCopy $top.Values.componentDefaults) (deepCopy $top.Values.podDefaults) -}}
   {{- include "common.warnings.rollingTag" $comp.image }}
 {{- end }}
 {{- range .Values.cronjobs }}
-  {{- $job := merge dict (deepCopy $top.Values.podDefaults) (deepCopy $top.Values.cronjobDefaults) . -}}
+  {{- $job := merge . (deepCopy $top.Values.cronjobDefaults) (deepCopy $top.Values.podDefaults) -}}
   {{- include "common.warnings.rollingTag" $job.image }}
 {{- end }}
 {{- include "app.validateValues" . }}
