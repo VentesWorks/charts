@@ -4,7 +4,7 @@
   {{- include "common.warnings.rollingTag" $comp.image }}
 {{- end }}
 {{- range .Values.cronjobs }}
-  {{- $job := merge dict (deepCopy $top.Values.podDefaults) (deepCopy $top.Values.componentDefaults) . -}}
+  {{- $job := merge dict (deepCopy $top.Values.podDefaults) (deepCopy $top.Values.cronjobDefaults) . -}}
   {{- include "common.warnings.rollingTag" $job.image }}
 {{- end }}
 {{- include "app.validateValues" . }}

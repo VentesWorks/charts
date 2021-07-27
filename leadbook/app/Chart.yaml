@@ -16,4 +16,4 @@ maintainers:
 name: app
 sources:
   - https://github.com/VentesWorks/charts/tree/master/leadbook/app
-version: 0.2.1
+version: 0.2.2
